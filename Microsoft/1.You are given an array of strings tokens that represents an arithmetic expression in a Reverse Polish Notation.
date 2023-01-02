@@ -1,0 +1,32 @@
+class Solution: 
+
+    def evalRPN(self, tokens: List[str]) -> int:
+        t=[]
+        y=["+","-","/","*"]
+        for i in tokens:
+            if i not in y:
+                t.append(int(i))
+            else:
+                if i=="+":
+                    ans=t.pop()+t.pop()
+                    t.append(ans)
+                elif i=="-":
+                    p=t.pop()
+                    q=t.pop()
+                    ans=q-p
+                    t.append(ans)
+                elif i=="*":
+                    ans=t.pop()*t.pop()
+                    t.append(ans)
+                elif i=="/":
+                    a=t.pop()
+                    b=t.pop()
+                    ans=b/a
+                    if ans<0:
+                        ans=ceil(ans)
+                    else:
+                        ans=b//a
+                    t.append(ans)
+                else:
+                    ans=0
+        return t.pop()

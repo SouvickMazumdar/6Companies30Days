@@ -1,0 +1,34 @@
+class Solution:
+    def getHint(self, secret: str, guess: str) -> str:
+        count_a=0
+        count_b=0
+        a=secret
+        b=guess
+        secret=list(secret)
+        guess=list(guess)
+        i=0
+        while(i<len(secret)):
+            # print(len(secret),i)
+            # print(secret," ",guess)
+            if secret[i] == guess[i]:
+                secret.pop(i)
+                guess.pop(i)
+                i=i-1
+                # print(i)
+                count_a=count_a+1
+            i=i+1
+        j=0
+        while(j<len(secret)):
+            if secret[j] in guess:
+                count_b=count_b+1
+                guess.pop(guess.index(secret[j]))
+                secret.pop(j)
+                # print(secret,guess)
+                j=j-1
+            j=j+1
+            
+        
+        ans=str(count_a)+"A"+str(count_b)+"B"
+        #print(ans)
+        return ans
+        

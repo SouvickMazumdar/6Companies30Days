@@ -1,0 +1,32 @@
+class Solution {
+public:
+vector<vector<int>> ans;
+int sum(vector<int>combination)
+{
+    int sum=0;
+    for(auto i:combination)
+    {
+        sum+=i;
+    }
+    return sum;
+}
+void func(int ind,int n,int k,vector<int> com)
+{
+    if(k==0)
+    {
+        if(sum(com)==n)
+        ans.push_back(com);
+        return;
+    }
+    if(ind>9)return;
+    com.push_back(ind);
+    func(ind+1,n,k-1,com);
+    com.pop_back();
+    func(ind+1,n,k,com);
+}
+    vector<vector<int>> combinationSum3(int k, int n) {
+        vector<int>com;
+        func(1,n,k,com);
+        return ans;
+    }
+};

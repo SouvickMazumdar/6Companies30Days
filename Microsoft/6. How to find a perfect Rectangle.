@@ -1,0 +1,36 @@
+class Solution {
+public:
+    bool isRectangleCover(vector<vector<int>>& rectangles) {
+       if(rectangles.size()==0|| rectangles[0].size()==0)return false;
+         int x1=INT_MAX;
+         int y1=INT_MAX;
+         int x2=INT_MIN;
+         int y2=INT_MIN;
+        set<pair<long long int,long long int>> st;
+        long long area=0;
+        for(auto it:rectangles)
+        {
+            x1=min(x1,it[0]);
+            y1=min(y1,it[1]);
+            x2=max(x2,it[2]);
+            y2=max(y2,it[3]);
+            area=area+(it[2]*1.0-it[0]*1.0)*(it[3]*1.0-it[1]*1.0);
+            pair<long long int,long long int>a,b,c,d;
+            a=make_pair(it[0],it[1]);
+            b=make_pair(it[0],it[3]);
+            c=make_pair(it[2],it[1]);
+            d=make_pair(it[2],it[3]);
+
+            if(st.find(a)!=st.end())st.erase(a);
+            else st.insert(a);
+            if(st.find(b)!=st.end())st.erase(b);
+            else st.insert(b);
+            if(st.find(c)!=st.end())st.erase(c);
+            else st.insert(c);
+            if(st.find(d)!=st.end())st.erase(d);
+            else st.insert(d);
+        }
+        if (st.find(make_pair(x1,y1))==st.end()||st.find(make_pair(x1,y2))==st.end()||st.find(make_pair(x2,y1))==st.end()||st.find(make_pair(x2,y2))==st.end()||st.size()!=4)return false;
+        return area==(x2*1.0-x1*1.0)*(y2*1.0-y1*1.0);
+    }
+};

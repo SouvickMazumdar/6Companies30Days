@@ -1,0 +1,59 @@
+// BELOW CODE PASSES 53 OUT OF 54 TEST CASES
+#include<bits/stdc++.h>
+class Solution {
+public:
+    int numberOfSubstrings(string s) {
+        int i=0;
+        int n=s.size();
+        map<char,int>mp;
+        if(s.size()<3)return 0;
+        int ans=0;
+        int a_count=0,b_count=0,c_count=0;
+        for(int i=0;i<s.size();i++)
+        {
+            a_count=0;b_count=0;c_count=0;
+            for(int j=i;j<s.size();j++)
+            {
+                if(s[j]=='a')
+                a_count++;
+                else if(s[j]=='b')
+                b_count++;
+                else if(s[j]=='c')
+                c_count++;
+                
+                if(a_count>=1 && b_count>=1 && c_count>=1)
+                {
+                    ans=ans+n-j;break;
+                }
+            }
+        }
+        return ans;
+    }
+};
+
+//BELOW CODE PASSES ALL THE TEST CASSES
+
+#include<bits/stdc++.h>
+class Solution {
+public:
+    int numberOfSubstrings(string s) {
+        int i=0;
+        int n=s.size();
+        map<char,int>mp;
+        if(s.size()<3)return 0;
+        int ans=0;
+        int j=0;
+        for(int i=0;i<s.size();i++)
+        {
+            mp[s[i]]++;
+            while(mp['a'] && mp['b'] && mp['c'])
+            {
+                ans+=n-i;
+                mp[s[j]]--;
+                j++;
+            }
+            
+        }
+        return ans;
+    }
+};

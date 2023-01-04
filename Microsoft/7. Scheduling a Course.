@@ -1,0 +1,89 @@
+//Using DFS ## Only passing 44 out of 52 cases
+
+class Solution {
+public:
+    bool dfs(int node, vector<vector<int>> pr, vector<int> vis, vector<int>pathVis)
+    {
+        vis[node]=1;
+        pathVis[node]=1;
+        for(auto i: pr[node])
+        {
+            if(!vis[i])
+            {
+                if(dfs(i, pr,vis,pathVis)==true)return true;
+            }
+            else if(pathVis[i])
+            {
+                return true;
+            }
+        }
+
+        pathVis[node]=0;
+        return false;
+    }
+    bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
+        int n=numCourses;
+        vector<vector<int>>adj(n,vector<int>());
+        for(auto it: prerequisites)
+        {
+            adj[it[0]].push_back(it[1]);
+        }
+        vector<int>vis(n,0);
+        vector<int>pathVis(n,0);
+        
+        for(int i=0;i<n;i++)
+        {
+            if(!vis[i])
+            {
+                if(dfs(i,adj, vis, pathVis)==true)return false;
+            }
+        }
+        return true;
+
+    }
+};
+
+
+
+//Now using BFS (TOPOLOGICAL SORT)
+
+class Solution {
+public:
+    bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
+        int n=numCourses;
+        vector<vector<int>>adj(n,vector<int>());
+        for(auto it: prerequisites)
+        {
+            adj[it[1]].push_back(it[0]);
+        }
+        vector<int>ind(n,0);
+        queue<int> q;
+        vector<int>top;
+        for(int i=0;i<n;i++)
+        {
+            for (auto j : adj[i])
+            {
+                ind[j]++;
+            }
+        }
+        for(int i=0;i<n;i++)
+        {
+            if(!ind[i])q.push(i);
+        }
+        
+        while(!q.empty())
+        {
+            int k=q.front();
+            q.pop();
+            top.push_back(k);
+            for(auto it: adj[k])
+            {
+                ind[it]--;
+                if(ind[it]==0)q.push(it);
+            }
+
+        }
+        return top.size()==n;
+
+    }
+};

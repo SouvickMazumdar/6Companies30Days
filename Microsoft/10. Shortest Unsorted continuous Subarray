@@ -1,0 +1,22 @@
+#https://leetcode.com/problems/shortest-unsorted-continuous-subarray/description/
+class Solution:
+    def findUnsortedSubarray(self, nums: List[int]) -> int:
+
+        l=sorted(nums)
+        print(nums)
+        print(l)
+        i=0;j=len(nums)-1
+        rt=-1;lt=-1
+        while i<j and (rt==-1 or lt==-1):
+            if nums[i]!=l[i]:
+                lt=i
+            else:
+                i+=1
+            if nums[j]!=l[j]:
+                rt=j
+            else:
+                j-=1
+        if rt==-1 and lt==-1:
+            return 0
+        else:
+            return rt-lt+1

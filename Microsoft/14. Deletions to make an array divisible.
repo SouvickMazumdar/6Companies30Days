@@ -1,8 +1,14 @@
 class Solution:
+
+    def gcd(self, a,b):
+        if a%b==0:
+            return b
+        else:
+            return gcd(b,a%b)
     def minOperations(self, nums: List[int], numsDivide: List[int]) -> int:
         gcd_ans=numsDivide[0]
-        for i in range(len(numsDivide)):
-            gcd_ans=math.gcd(gcd_ans,numsDivide[i])
+        for i in numsDivide:
+            gcd_ans=gcd(max(gcd_ans,i),min(gcd_ans,i))
         nums.sort()
         count=0
         for i in nums:

@@ -1,0 +1,32 @@
+//https://leetcode.com/problems/max-points-on-a-line/solutions/3012294/easy-python-solution/
+
+class Solution:
+
+   
+    def maxPoints(self, points: List[List[int]]) -> int:
+        
+        if len(points)==1:
+            return 1
+        ans=-100001
+        for i in range(len(points)):
+            x=points[i][0]
+            y=points[i][1]
+            d={"#":0}
+            for j in range(len(points)):
+                if points[i]==points[j]:
+                    continue
+                x2=points[j][0]
+                y2=points[j][1]
+                #print(99999)
+                if x2-x==0:
+                    m=90
+                else:
+                    m=math.atan((y2-y)/(x2-x))
+                if d.get(m) is None:
+                    d[m]=1
+                else:
+                    d[m]+=1
+                ans=max(ans,d[m])
+        return ans+1
+
+           

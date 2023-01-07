@@ -1,0 +1,24 @@
+#https://leetcode.com/problems/number-of-boomerangs/solutions/3014174/easy-python-solution/
+
+class Solution:
+    def dis(self,a,b):
+        return (a[0]-b[0])**2+(a[1]-b[1])**2
+    def numberOfBoomerangs(self, points: List[List[int]]) -> int:
+        count=0
+        if len(points)<3:
+            return 0
+        for i in points:
+            d={}
+            for j in points:
+                if i==j:
+                    continue
+                bis=self.dis(i,j)
+                if d.get(bis) is None:
+                    d[bis]=1
+                else:
+                    d[bis]+=1
+                    count+=d[bis]*2-2
+            # print(count,d)
+        return count
+                
+                

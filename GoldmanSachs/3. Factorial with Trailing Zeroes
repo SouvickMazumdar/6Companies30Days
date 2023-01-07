@@ -1,5 +1,6 @@
-//https://leetcode.com/problems/factorial-trailing-zeroes/solutions/3012992/k5-short-cut-for-trailing-zeros/
-
+#https://leetcode.com/problems/factorial-trailing-zeroes/solutions/3012992/k5-short-cut-for-trailing-zeros/
+#Learning video:
+#https://coolconversion.com/math/factorial/What-is-the-factorial-of_10000_%3F
 class Solution:
     def trailingZeroes(self, n: int) -> int:
         k=n//5

@@ -1,0 +1,12 @@
+//https://leetcode.com/problems/factorial-trailing-zeroes/solutions/3012992/k5-short-cut-for-trailing-zeros/
+
+class Solution:
+    def trailingZeroes(self, n: int) -> int:
+        k=n//5
+        h=5*k
+        ans=0
+        while(h!=0):
+            ans+=h//5
+            h=h//5
+        print(ans)
+        return ans

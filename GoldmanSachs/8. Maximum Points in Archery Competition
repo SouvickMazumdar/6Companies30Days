@@ -1,0 +1,62 @@
+//https://leetcode.com/problems/maximum-points-in-an-archery-competition/solutions/3021112/0-1-knapsack/
+
+class Solution {
+public:
+int f(int ind,int max_w,vector<int>&wt,vector<vector<int>>&dp)
+{
+    if(ind <= 0 )return 0;
+     if(dp[ind][max_w]!=-1)return dp[ind][max_w];
+    int notPick=f(ind-1,max_w,wt,dp);
+    int Pick=0;
+    if(wt[ind]<max_w)
+    {
+        Pick=ind+f(ind-1,max_w-wt[ind]-1,wt,dp);
+    }
+     return dp[ind][max_w]=max(Pick,notPick);
+}
+    vector<int> maximumBobPoints(int numArrows, vector<int>& aliceArrows) {
+        // int n=aliceArrows.size();
+        vector<vector<int>> dp(12,vector<int>(numArrows+1,-1));
+        
+        // for(auto i:dp)
+        // {
+        //     for(auto j:i)
+        //     cout<<j<<" ";
+        //     cout<<"\n";
+        // }
+        //return {};
+
+        vector<int>ans(12,0);
+        int result = f(11, numArrows,aliceArrows,dp);
+        cout<<result<<"\n";
+        int total = 0; // to count total arrows used by bob
+        for (int i=12, j=numArrows; i > 0 && result > 0; i--) {
+            if (result == dp[i-1][j])
+                {cout<<dp[i-1][j];continue;}
+                
+            else {
+                //cout<<"####\n";
+                // This item is included.
+                ans[i] = aliceArrows[i]+1;
+                //cout<<ans[i]<<" "<<i<<"\n";
+                result -=  (i);  // subtracting profit
+                j -= (aliceArrows[i]+1); // subtracting weight
+                total += aliceArrows[i]+1; 
+            }
+        }
+        
+		// as bob has to fire numArrows, remaining can be of 0 value
+        if(total<numArrows){
+            ans[0] = numArrows-total;
+        }
+        // for(auto i:ans)
+        // {
+        //    cout<<i<<" ";
+        // }
+    
+      return ans;
+
+    
+       // return {};
+    }
+};

@@ -1,0 +1,77 @@
+//https://leetcode.com/problems/get-biggest-three-rhombus-sums-in-a-grid/solutions/3032253/cpp-solution/
+
+#include<bits/stdc++.h>
+class Solution {
+public:
+    vector<int> getBiggestThree(vector<vector<int>>& grid) {
+
+        int m=grid.size();
+        int n=grid[0].size();
+        int maxi=0;
+        set<int> st;
+        for(int i=0;i<m;i++)
+            {
+                for(int j=0;j<n;j++)
+                {
+                   st.insert(grid[i][j]);
+                }
+            }
+        for(int i=1;i<m-1;i++)
+        {
+            for(int j=1;j<n-1;j++)
+            {
+                for(int s=1;s<50;s++)
+                {
+                    if(i-s<0 || j-s<0 || i+s>=m||j+s>=n)
+                    break;
+                    int rt=grid[i][j+s],lt=grid[i][j-s],tp=grid[i-s][j],dn=grid[i+s][j];
+                    int tp_x=i-s,tp_y=j;
+                    int lt_x=i,lt_y=j-s;
+                    int rt_x=i,rt_y=j+s;
+                    int dn_x=i+s,dn_y=j;
+                    int lt_sum=0;
+                    int tp_x_c=tp_x,tp_y_c=tp_y;
+                    while(tp_x_c<=lt_x && tp_y_c>=lt_y)
+                    {
+                        lt_sum+=grid[tp_x_c][tp_y_c];
+                        tp_x_c++;tp_y_c--;
+                    }
+                    int rt_sum=0;
+                    tp_x_c=tp_x;tp_y_c=tp_y;
+                    while(tp_x_c<=rt_x && tp_y_c<=rt_y)
+                    {
+                        rt_sum+=grid[tp_x_c][tp_y_c];
+                        tp_x_c++;tp_y_c++;
+                    }
+                    int dn_rt_sum=0;
+                    int dn_x_c=dn_x,dn_y_c=dn_y;
+                    while(dn_x_c>=rt_x && dn_y_c<=rt_y)
+                    {
+                        dn_rt_sum+=grid[dn_x_c][dn_y_c];
+                        dn_x_c--;dn_y_c++;
+                    }
+                    int dn_lt_sum=0;
+                    dn_x_c=dn_x;dn_y_c=dn_y;
+                    while(dn_x_c>=lt_x && dn_y_c>=lt_y)
+                    {
+                        dn_lt_sum+=grid[dn_x_c][dn_y_c];
+                        dn_x_c--;dn_y_c--;
+                    }
+                    int bin=lt_sum+rt_sum+dn_rt_sum+dn_lt_sum-rt-lt-dn-tp;
+                    st.insert(bin);
+                }
+            }
+        }
+        vector<int>l,ans;int c=0;
+        for (auto i:st)
+        {
+            l.push_back(i);
+        }
+      reverse(l.begin(),l.end());
+        for(int i=0;i<l.size() && i<3;i++)
+        {
+            ans.push_back(l[i]);
+        }
+        return ans;
+    }
+};

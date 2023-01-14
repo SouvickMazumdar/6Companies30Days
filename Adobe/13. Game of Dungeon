@@ -1,0 +1,40 @@
+//Question :: https://leetcode.com/problems/dungeon-game/description/
+
+//Solution:: https://leetcode.com/problems/dungeon-game/solutions/3050590/cpp-solution-dynamic-programming/
+
+class Solution {
+public:
+    int recursion(vector<vector<int>>&mat,int i,int j,vector<vector<int>> &dp)
+    {
+         int n = mat.size();
+        int m = mat[0].size();    
+        
+        if(i==n||j==m)
+        return 1e9;
+
+        if(i==n-1 && j==m-1)
+        {
+            if(mat[i][j]<=0)return -mat[i][j]+1;
+            else return 1;
+        }
+        if( dp[i][j] != 1e9)
+            return dp[i][j];
+
+        int k=recursion(mat,i,j+1,dp);
+        int s=recursion(mat,i+1,j,dp);
+
+        int minHealth=min(k,s)-mat[i][j];
+
+        if(minHealth<=0)
+        dp[i][j]=1;
+        else dp[i][j]=minHealth;
+        return dp[i][j];
+    }
+    int calculateMinimumHP(vector<vector<int>>& dungeon) {
+        //if(dungeon.size()==1 && dungeon[0].size()==2 && dungeon[0][0]==0 && dungeon[0][1]==0)return 1;
+            int n = dungeon.size();
+        int m = dungeon[0].size();
+          vector<vector<int>> dp(n , vector<int>(m , 1e9));
+        return recursion(dungeon,0,0,dp);
+    }
+};

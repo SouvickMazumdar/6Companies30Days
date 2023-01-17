@@ -1,0 +1,65 @@
+//https://leetcode.com/problems/remove-zero-sum-consecutive-nodes-from-linked-list/
+
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    // ListNode* removeZeroSumSublists(ListNode* head) {
+    //     ListNode *temp=new ListNode(0);//This will create a node with value 0
+    //     ListNode *cur=temp;//another pointer pointing the temp;
+    //     temp->next=head;//The next node will become the head;
+    //     map<int,ListNode*>mp;
+    //     int prefix=0;
+    //     while(cur)
+    //     {
+    //         prefix+=cur->val;
+    //         if(mp.count(prefix))
+    //         {
+    //             cur=mp[prefix]->next;
+    //             int p=prefix+cur->val;
+    //             while(p!=prefix)
+    //             {
+    //                 mp.erase(p);
+    //                 cur=cur->next;
+    //                 p+=cur->val;
+    //             }
+    //             mp[prefix]->next=cur->next;
+    //         }
+    //         else
+    //         {
+    //             mp[prefix]=cur;
+    //         }
+    //         cur=cur->next;   
+    //     }
+    //     return temp->next;
+        
+    // }
+
+//TWO PASS APPROACH
+//FIRST PASS IS USED TO POINT EVERY PREFIX TO ITS NEXT NODE AVOIDING SEQUENCE GIVING SUM=0
+//SECOND PASS IS USED TO CONNECT ALL THOSE PREFIX POINTER INTO SINGLE LINKED LIST
+
+        ListNode* removeZeroSumSublists(ListNode* head) {
+        ListNode* dummy = new ListNode(0);
+        dummy->next = head;
+        int prefix = 0;
+        unordered_map<int, ListNode*> seen;
+        for (ListNode* i = dummy; i; i = i->next) {
+            seen[prefix += i->val] = i;
+        }
+        prefix = 0;
+        for (ListNode* i = dummy; i; i = i->next) {
+            i->next = seen[prefix += i->val]->next;
+        }
+        return dummy->next;
+    }
+};

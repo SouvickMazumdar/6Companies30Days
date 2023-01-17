@@ -1,0 +1,26 @@
+//https://leetcode.com/problems/find-the-winner-of-the-circular-game/
+
+class Solution {
+public:
+    int findTheWinner(int n, int k) {
+        vector<int> v;
+        for(int i=0;i<n;i++)
+        v.push_back(i+1);
+        int m=0;
+        while(n>1)
+        {
+            int ind=(k%n)-1;
+            ind=(ind+m)%n;
+            if(ind<0)
+            {
+                ind=n-1;
+            }
+            //cout<<ind<<" ";
+            v.erase (v.begin() + ind);//To remove the element of any particular index(ind) in vector v
+            n-=1;
+            m=ind;
+        }
+        return v[0];
+        
+    }
+};

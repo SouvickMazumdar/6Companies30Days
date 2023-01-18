@@ -1,0 +1,74 @@
+
+class Solution {
+public:
+int minDistance(int dist[], bool sptSet[],int V)
+{
+	int min = INT_MAX, min_index;
+
+	for (int v = 0; v < V; v++)
+		if (sptSet[v] == false && dist[v] <= min)
+			min = dist[v], min_index = v;
+
+	return min_index;
+}
+vector<int> func(int arr[],int thresh,int V)
+{       vector<int> k;
+    	for (int i = 0; i < V; i++)
+    	{
+    	    if(arr[i]<=thresh && arr[i]!=0)
+    	    k.push_back(i);
+    	}
+    return k;
+}
+
+vector<int> dijkstra(vector<vector<int>>graph, int src,int thresh,int V)
+{
+	int dist[V]; 
+
+	bool sptSet[V]; 
+	
+	for (int i = 0; i < V; i++)
+		dist[i] = INT_MAX, sptSet[i] = false;
+
+	
+	dist[src] = 0;
+
+	
+	for (int count = 0; count < V - 1; count++) {
+	
+		int u = minDistance(dist, sptSet,V);
+		sptSet[u] = true;
+		for (int v = 0; v < V; v++)
+			if (!sptSet[v] && graph[u][v]
+				&& dist[u] != INT_MAX
+				&& dist[u] + graph[u][v] < dist[v])
+				dist[v] = dist[u] + graph[u][v];
+	}
+	return func(dist,thresh,V);
+}
+    int findTheCity(int n, vector<vector<int>>& g, int thresh) {
+        
+        vector<vector<int>> graph(n,vector<int>(n,0));
+        for(auto i:g)
+        {
+            graph[i[0]][i[1]]=i[2];
+            graph[i[1]][i[0]]=i[2];
+        }
+    	unordered_map<int, int>mp;
+	
+	int mini=INT_MAX;
+	for (int i=0;i<n;i++)
+	{
+	    vector<int> vr=dijkstra(graph, i, thresh,n);
+	    mp[i]=vr.size();
+	    mini=min(mini,mp[i]);
+	}
+	int maxi=INT_MIN;
+	for(auto i:mp)
+	{
+	    if(i.second==mini)
+	    maxi=max(maxi,i.first);
+	}
+    return maxi;
+    }
+};

@@ -1,0 +1,42 @@
+//https://leetcode.com/problems/distant-barcodes/solutions/3074023/hashmap-priorityqueue-cpp/
+
+class Solution {
+public:
+    vector<int> rearrangeBarcodes(vector<int>& barcodes) {
+        unordered_map<int,int> mp;
+        priority_queue<pair<int,int>> pq;
+        for(auto i:barcodes)
+        {
+            mp[i]++;
+        }
+        if(mp.size()==1)return barcodes;
+        for(auto i:mp)
+        {
+            pq.push(make_pair(i.second,i.first));
+        }
+        vector<int>vc;
+        while(!pq.empty())
+        {
+            if(pq.size()==1){vc.push_back(pq.top().second);break;}
+            pair<int,int>first,second;
+            first=pq.top();pq.pop();
+            second=pq.top();pq.pop();
+            if(vc.size()!=0 && vc.back()==first.second){pair<int,int> g=first;first=second;second=g;}
+            vc.push_back(first.second);
+            vc.push_back(second.second);
+            first.first-=1;
+            //cout<<first.first;
+            second.first-=1;
+            if(first.first==0 && second.first!=0)
+            pq.push(second);
+            else if(first.first!=0 && second.first==0)
+            pq.push(first);
+            else if(first.first!=0 && second.first!=0)
+            {
+                 pq.push(first);
+                 pq.push(second);
+            }
+        }
+        return vc;
+    }
+};

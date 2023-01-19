@@ -1,0 +1,35 @@
+//Used HashMap alog with sorting with specified comparator
+
+class Solution {
+public:
+static bool comp(pair<int,string> &a, pair<int,string> &b)
+{
+    if(a.first<b.first)return true;
+    else if(a.first==b.first)
+    {
+        if(a.second>b.second)
+        return true;
+    }
+    return false;
+}
+    vector<string> topKFrequent(vector<string>& words, int k) {
+        map<string,int> mp;
+        for(auto i:words)
+        {
+            mp[i]++;
+        }
+        vector<pair<int, string>>ar;
+        for(auto i:mp)
+        {
+            ar.push_back(make_pair(i.second,i.first));
+        }
+        sort(ar.begin(),ar.end(),comp);
+        vector<string>ans;
+        for(int i=0;i<k;i++)
+        {
+            ans.push_back(ar.back().second);
+            ar.pop_back();
+        }
+        return ans;
+    }
+};

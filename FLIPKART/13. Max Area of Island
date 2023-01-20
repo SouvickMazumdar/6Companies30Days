@@ -1,0 +1,35 @@
+//https://leetcode.com/problems/max-area-of-island/solutions/3077348/easy-peasy-recursion-dfs/
+
+class Solution {
+public:
+    int func(int i,int j,int r,int c,vector<vector<int>>&grid)
+    {
+        if(i<0||j<0||i==r||j==c)return 0;
+        if(grid[i][j]==0)return 0;
+        if(grid[i][j]==1){grid[i][j]=0;}
+        return 1+func(i+1,j,r,c,grid)+func(i,j+1,r,c,grid)+func(i-1,j,r,c,grid)+func(i,j-1,r,c,grid);
+        
+    }
+
+    int maxAreaOfIsland(vector<vector<int>>& grid) {
+        int maxi=0;
+        int r=grid.size();
+        int c=grid[0].size();
+        for(int i=0;i<grid.size();i++)
+        {
+            for(int j=0;j<grid[0].size();j++)
+            {
+                if (grid[i][j]==1)
+                {
+                    int k=func(i,j,r,c,grid);
+                    maxi=max(maxi,k);
+                    cout<<k;
+                }
+            }
+        }
+
+        //cout<<func(0,7,8,13,grid);
+        return maxi;
+        
+    }
+};

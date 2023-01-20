@@ -1,0 +1,36 @@
+class Solution {
+public:
+    string customSortString(string order, string s) {
+        vector<int>vc(26,0);
+        for(auto i : s)
+        {
+            vc[i-'a']++;
+        }
+        string st="";
+        for(auto i: order)
+        {
+            if(vc[i-'a']!=0)
+            {
+                while(vc[i-'a']>0)
+                {
+                    st+=i;
+                    vc[i-'a']--;
+                }
+            }
+        }
+        for(int i=0;i<26;i++)
+        {
+            if(vc[i]!=0)
+            {
+                while(vc[i]>0)
+                {
+                    st+=(char)('a'+i);
+                    vc[i]--;
+                }
+            }
+        }
+        return st;
+
+
+    }
+};

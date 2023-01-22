@@ -1,0 +1,17 @@
+//Solution::: 
+//https://leetcode.com/problems/maximum-consecutive-floors-without-special-floors/solutions/3086682/easy-cpp-solution/
+
+class Solution {
+public:
+    int maxConsecutive(int bottom, int top, vector<int>& special) {
+       sort(special.begin(),special.end());
+       int n=special.size();
+       int maxi=special[0]-bottom;
+       for(int i=1;i<n;i++)
+       {
+           maxi=max(maxi,special[i]-special[i-1]-1);
+       } 
+       maxi=max(maxi,top-special[n-1]);
+       return maxi;
+    }
+};

@@ -1,0 +1,40 @@
+class Solution {
+public:
+    void merge(vector<int>&ar,int left,int mid,int right )
+    {
+        vector<int>br(right-left+1,0);
+        int i=left,j=mid+1,h=0;
+        while(i<=mid && j<=right)
+        {
+            if(ar[i]<=ar[j])
+            {
+               br[h++]=ar[i++];
+            }
+            else 
+            {
+                br[h++]=ar[j++];
+            }
+        } 
+        while(i<=mid)br[h++]=ar[i++];
+        while(j<=right)br[h++]=ar[j++];
+         h=0;
+        for(int k=left;k<=right;k++)
+        {
+            ar[k]=br[h++];
+        }
+    }
+    void merge_sort(vector<int>&ar, int i,int j)
+    {
+        if(i<j)
+        {
+            int mid=(i+j)/2;
+            merge_sort(ar,i,mid);
+            merge_sort(ar,mid+1,j);
+            merge(ar,i,mid,j);
+        }
+    }
+    vector<int> sortArray(vector<int>& nums) {
+     merge_sort(nums,0,nums.size()-1);  
+     return nums; 
+    }
+};
